@@ -9,7 +9,7 @@ public class GameMain extends Canvas {
     public static void main(String[] args) {
 
         // Start the game
-        GameController.Start();
+        new Thread(new RunThread(0)).start();
 
         int refreshRate = GameController.RefreshRate();
         long currentFrameTime = 0;
@@ -22,9 +22,16 @@ public class GameMain extends Canvas {
 
             if (currentFrameTime - lastFrameTime >= 1_000_000_000 / refreshRate) {
 
-                new Thread(new UpdateThread()).start();
+                // Update
+                new Thread(new RunThread(1)).start();
+
                 deltaTime = (double) (currentFrameTime - lastFrameTime) / 1_000_000_000;
                 lastFrameTime = currentFrameTime;
+
+                // Some rendering
+
+                // Late Update
+                new Thread(new RunThread(2)).start();
             }
         }
     }

@@ -22,7 +22,7 @@ public class GameController {
 
     private static long x, counter;
 
-    // Called once each frame
+    // Called each frame
     public static void Update() {
 
         counter++;
@@ -33,6 +33,11 @@ public class GameController {
             counter = 0;
             x = y;
         }
+    }
+
+    // Called each frame after rendering
+    public static void LateUpdate() {
+
     }
 
 
