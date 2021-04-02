@@ -1,5 +1,11 @@
 package gameRun;
 
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.awt.GLCanvas;
+
+import java.awt.*;
+
 public class GameMain {
 
     private static double deltaTime;
@@ -35,16 +41,19 @@ public class GameMain {
             }
         }
 
-        gameCanvas.closeFrame();
+        //gameCanvas.closeFrame();
     }
 
     // Render stuff to the canvas
     private static void Render() {
 
+        gameCanvas.repaint();
     }
 
     // Before start
     private static void Start() {
+
+        System.setProperty("sun.java2d.opengl", "true");
 
         gameCanvas = new GameCanvas();
         gameCanvas.addKeyListener(new KeyController());

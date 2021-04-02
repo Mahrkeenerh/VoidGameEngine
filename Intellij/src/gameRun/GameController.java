@@ -28,6 +28,9 @@ public class GameController {
     // Called each frame
     public static void Update() {
 
+        // Realtime fps
+        //x = (long) (1 / DeltaTime());
+
         counter++;
         long y = System.currentTimeMillis() / 1000;
 
