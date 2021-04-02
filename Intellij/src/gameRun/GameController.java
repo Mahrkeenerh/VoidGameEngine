@@ -4,6 +4,9 @@ public class GameController {
 
     // Globals - config.json
     private static final int refreshRate = 100;
+    private static final int width = 1920;
+    private static final int height = 1080;
+    private static final String windowName = "VOID ENGINE";
 
     private static boolean running = true;
 
@@ -33,6 +36,7 @@ public class GameController {
             counter = 0;
             x = y;
         }
+
     }
 
     // Called each frame after rendering
@@ -57,6 +61,23 @@ public class GameController {
     public static int RefreshRate() {
 
         return refreshRate;
+    }
+
+    // Return canvas sizes
+    public static int Width() {
+
+        return width;
+    }
+
+    public static int Height() {
+
+        return height;
+    }
+
+    // Return canvas name
+    public static String WindowName() {
+
+        return windowName;
     }
 
     // Return Delta time
