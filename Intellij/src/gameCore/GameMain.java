@@ -1,15 +1,9 @@
-package gameRun;
-
-import com.jogamp.opengl.GLCapabilities;
-import com.jogamp.opengl.GLProfile;
-import com.jogamp.opengl.awt.GLCanvas;
-
-import java.awt.*;
+package gameCore;
 
 public class GameMain {
 
     private static double deltaTime;
-    private static GameCanvas gameCanvas;
+    private static GameWindow gameWindow;
 
     public static void main(String[] args) {
 
@@ -28,7 +22,7 @@ public class GameMain {
             if (currentFrameTime - lastFrameTime >= 1_000_000_000 / refreshRate) {
 
                 // Update
-                new Thread(new RunThread(1)).start();
+                GameController.Update();
 
                 deltaTime = (double) (currentFrameTime - lastFrameTime) / 1_000_000_000;
                 lastFrameTime = currentFrameTime;
@@ -37,17 +31,11 @@ public class GameMain {
                 Render();
 
                 // Late Update
-                new Thread(new RunThread(2)).start();
+                GameController.LateUpdate();
             }
         }
 
-        //gameCanvas.closeFrame();
-    }
-
-    // Render stuff to the canvas
-    private static void Render() {
-
-        gameCanvas.repaint();
+        gameWindow.closeFrame();
     }
 
     // Before start
@@ -55,10 +43,21 @@ public class GameMain {
 
         System.setProperty("sun.java2d.opengl", "true");
 
-        gameCanvas = new GameCanvas();
-        gameCanvas.addKeyListener(new KeyController());
+        gameWindow = new GameWindow();
+        gameWindow.setFocusable(true);
+        gameWindow.addKeyListener(new KeyController());
 
-        new Thread(new RunThread(0)).start();
+        // Add all existing gameObjects to GameController
+        GameObject testVoid = new TestVoid();
+        testVoid.setImage("C:/Users/samue/OneDrive/School/VAVA/Zadanie semestralne/Intellij/res/Logo.png");
+
+        GameController.Start();
+    }
+
+    // Render stuff to the canvas
+    private static void Render() {
+
+        gameWindow.repaint();
     }
 
     public static double DeltaTime() {

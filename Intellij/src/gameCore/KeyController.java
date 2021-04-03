@@ -1,11 +1,11 @@
-package gameRun;
+package gameCore;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-public class KeyController implements KeyListener {
+public class KeyController extends KeyAdapter {
 
     public static Dictionary<Integer, Boolean> pressedDict = new Hashtable<>();
 

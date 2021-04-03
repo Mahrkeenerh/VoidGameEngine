@@ -1,4 +1,4 @@
-package gameRun;
+package gameCore;
 
 public class Vector2 {
 
