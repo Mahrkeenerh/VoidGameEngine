@@ -45,11 +45,13 @@ public class GameMain {
 
         gameWindow = new GameWindow();
         gameWindow.setFocusable(true);
-        gameWindow.addKeyListener(new KeyController());
+        KeyController keyController = new KeyController();
+        gameWindow.addKeyListener(keyController);
 
         // Add all existing gameObjects to GameController
-        GameObject testVoid = new TestVoid();
-        testVoid.setImage("C:/Users/samue/OneDrive/School/VAVA/Zadanie semestralne/Intellij/res/Logo.png");
+        GameObject pozadie = new GameObject();
+        pozadie.setImage("C:/Users/samue/OneDrive/School/VAVA/Zadanie semestralne/Intellij/res/radiant_dire2.jpg");
+        pozadie.setPosition(new Vector2(-250, 250));
 
         GameController.Start();
     }

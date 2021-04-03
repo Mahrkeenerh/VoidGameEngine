@@ -22,6 +22,7 @@ public class GameController {
     }
 
 
+    // TODO move stuff out
     // Called at the start of game in zOrder
     public static void Start() {
 
@@ -50,6 +51,13 @@ public class GameController {
     }
 
 
+    // Get camera
+    public static Camera getCamera() {
+
+        return camera;
+    }
+
+    // TODO CONSTANT SORT
     // Add new GameObject to objectList for Update and Render
     public static void addObjectToList(GameObject gameObject) {
 
@@ -63,12 +71,6 @@ public class GameController {
         }
 
         objectList.add(objectList.size(), gameObject);
-    }
-
-    // Get camera
-    public static Camera getCamera() {
-
-        return camera;
     }
 
     // Get objectList

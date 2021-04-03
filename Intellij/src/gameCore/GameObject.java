@@ -11,36 +11,12 @@ public class GameObject {
 
     protected Vector2 position = new Vector2();
     protected Vector2 scale = new Vector2(1, 1);
+    protected String imagePath = null;
     protected Image image = null;
     protected Vector2 imageResolution = new Vector2();
     protected double zOrder = 0;
 
     public GameObject() {
-
-        GameController.addObjectToList(this);
-    }
-
-    public GameObject(Vector2 position, Vector2 scale, String imagePath, double zOrder) {
-
-        this.position = position;
-        this.scale = scale;
-
-        if (imagePath != null) {
-
-            this.image = new ImageIcon(imagePath).getImage();
-
-            try {
-
-                BufferedImage img = ImageIO.read(new File(imagePath));
-                imageResolution.x = img.getWidth();
-                imageResolution.y = img.getHeight();
-            } catch (IOException e) {
-
-                e.printStackTrace();
-            }
-        }
-
-        this.zOrder = zOrder;
 
         GameController.addObjectToList(this);
     }
@@ -81,7 +57,8 @@ public class GameObject {
 
     public void setPosition(Vector2 position) {
 
-        this.position = position;
+        this.position.x = position.x;
+        this.position.y = position.y;
     }
 
     public Vector2 getScale() {
@@ -91,7 +68,8 @@ public class GameObject {
 
     public void setScale(Vector2 scale) {
 
-        this.scale = scale;
+        this.scale.x = scale.x;
+        this.scale.y = scale.y;
     }
 
     public Image getImage() {
@@ -101,6 +79,7 @@ public class GameObject {
 
     public void setImage(String imagePath) {
 
+        this.imagePath = imagePath;
         this.image = new ImageIcon(imagePath).getImage();
 
         try {
