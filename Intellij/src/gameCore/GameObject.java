@@ -7,14 +7,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class GameObject {
+public class GameObject implements Comparable<GameObject>{
 
     protected Vector2 position = new Vector2();
     protected Vector2 scale = new Vector2(1, 1);
     protected String imagePath = null;
     protected Image image = null;
     protected Vector2 imageResolution = new Vector2();
-    protected double zOrder = 0;
+    protected Integer zOrder = 0;
 
     public GameObject() {
 
@@ -26,6 +26,11 @@ public class GameObject {
 
     }
 
+    // Called fixed times per second
+    public void PhysicsUpdate() {
+
+    }
+
     // Called at the start of each frame
     public void Update() {
 
@@ -34,6 +39,13 @@ public class GameObject {
     // Called at the end of each frame
     public void LateUpdate() {
 
+    }
+
+
+    // Compare to
+    public int compareTo(GameObject gameObject) {
+
+        return this.zOrder.compareTo(gameObject.getzOrder());
     }
 
     // Add to objectList for Update and Render
@@ -103,12 +115,12 @@ public class GameObject {
         this.imageResolution = imageResolution;
     }
 
-    public double getzOrder() {
+    public Integer getzOrder() {
 
         return zOrder;
     }
 
-    public void setzOrder(double zOrder) {
+    public void setzOrder(Integer zOrder) {
 
         this.zOrder = zOrder;
     }

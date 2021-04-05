@@ -9,6 +9,11 @@ public class KeyController extends KeyAdapter {
 
     public static Dictionary<Integer, Boolean> pressedDict = new Hashtable<>();
 
+    public KeyController() {
+
+        System.out.println("KEYCONTROLLER INSTANTIATED");
+    }
+
     public void keyTyped(java.awt.event.KeyEvent e) {
 
         // YOU GET NOTHING
@@ -17,6 +22,7 @@ public class KeyController extends KeyAdapter {
 
     public void keyPressed(java.awt.event.KeyEvent e) {
 
+        System.out.println(e);
         pressedDict.put(e.getKeyCode(), true);
     }
 

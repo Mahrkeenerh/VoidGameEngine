@@ -1,37 +1,78 @@
 package gameCore;
 
-public class GameMain {
+import User.MoveTest;
 
-    private static double deltaTime;
+public class GameMain implements Runnable {
+
     private static GameWindow gameWindow;
 
+    private static double updatePassedTime;
+    private static double physicsPassedTime;
+
+    private GameMain() {
+
+    }
+
+    public void run() {
+
+        int physicsRate = GameController.PhysicsRate();
+
+        long lastFrameTime = System.nanoTime();
+        long currentFrameTime;
+        long passedTime = 0;
+
+        // Physics Game loop
+        while (GameController.isRunning()) {
+
+            currentFrameTime = System.nanoTime();
+            passedTime = currentFrameTime - lastFrameTime;
+            lastFrameTime = currentFrameTime;
+
+            physicsPassedTime += passedTime;
+
+            // Physics update
+            if (physicsPassedTime >= (double) 1_000_000_000 / physicsRate) {
+
+                GameController.setPhysicsDeltaTime(physicsPassedTime / 1_000_000_000);
+                GameController.increaseRunningTime(physicsPassedTime / 1_000_000_000);
+                physicsPassedTime = 0;
+
+                PhysicsUpdate();
+            }
+        }
+    }
+
     public static void main(String[] args) {
+
+        int refreshRate = GameController.RefreshRate();
 
         // Start the game
         Start();
 
-        int refreshRate = GameController.RefreshRate();
-        long currentFrameTime = 0;
         long lastFrameTime = System.nanoTime();
+        long currentFrameTime;
+        long passedTime = 0;
+
+        new Thread(new GameMain()).start();
 
         // Game loop
         while (GameController.isRunning()) {
 
             currentFrameTime = System.nanoTime();
+            passedTime = currentFrameTime - lastFrameTime;
+            lastFrameTime = currentFrameTime;
 
-            if (currentFrameTime - lastFrameTime >= 1_000_000_000 / refreshRate) {
+            updatePassedTime += passedTime;
 
-                // Update
-                GameController.Update();
+            // Render time
+            if (updatePassedTime >= (double) 1_000_000_000 / refreshRate) {
 
-                deltaTime = (double) (currentFrameTime - lastFrameTime) / 1_000_000_000;
-                lastFrameTime = currentFrameTime;
+                GameController.setDeltaTime(updatePassedTime / 1_000_000_000);
+                updatePassedTime = 0;
 
-                // Some rendering
+                Update();
                 Render();
-
-                // Late Update
-                GameController.LateUpdate();
+                LateUpdate();
             }
         }
 
@@ -41,29 +82,50 @@ public class GameMain {
     // Before start
     private static void Start() {
 
-        System.setProperty("sun.java2d.opengl", "true");
+        updatePassedTime = 0;
+        physicsPassedTime = 0;
 
         gameWindow = new GameWindow();
         gameWindow.setFocusable(true);
-        KeyController keyController = new KeyController();
-        gameWindow.addKeyListener(keyController);
+        gameWindow.addKeyListener(new KeyController());
+        gameWindow.requestFocusInWindow();
+
+        GameController.setCamera(new Camera());
+        GameController.clearObjectList();
 
         // Add all existing gameObjects to GameController
         GameObject pozadie = new GameObject();
         pozadie.setImage("C:/Users/samue/OneDrive/School/VAVA/Zadanie semestralne/Intellij/res/radiant_dire2.jpg");
         pozadie.setPosition(new Vector2(-250, 250));
 
+        GameObject move = new MoveTest();
+        move.setImage("C:/Users/samue/OneDrive/School/VAVA/Zadanie semestralne/Intellij/res/Logo.png");
+        move.setScale(new Vector2(0.5F, 0.5F));
+
         GameController.Start();
+    }
+
+    // Fizik
+    private static void PhysicsUpdate() {
+
+        GameController.PhysicsUpdate();
+    }
+
+    // Before render
+    private static void Update() {
+
+        GameController.Update();
+    }
+
+    // After render
+    private static void LateUpdate() {
+
+        GameController.LateUpdate();
     }
 
     // Render stuff to the canvas
     private static void Render() {
 
         gameWindow.repaint();
-    }
-
-    public static double DeltaTime() {
-
-        return deltaTime;
     }
 }

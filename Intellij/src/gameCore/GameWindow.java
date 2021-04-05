@@ -2,6 +2,8 @@ package gameCore;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameWindow extends JPanel {
 
@@ -36,7 +38,9 @@ public class GameWindow extends JPanel {
 
         Camera camera = GameController.getCamera();
 
-        for (GameObject gameObject: GameController.getObjectList()) {
+        List<GameObject> oldObjectList = new ArrayList<>(GameController.getObjectList());
+
+        for (GameObject gameObject: oldObjectList) {
 
             g.drawImage(
                     gameObject.getImage(),
