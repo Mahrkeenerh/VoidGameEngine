@@ -14,6 +14,7 @@ public class GameController {
     private static double physicsDeltaTime = 0;
 
     private static double runningTime = 0;
+    private static boolean running = true;
 
     private static final int width = 1920;
     private static final int height = 1080;
@@ -22,8 +23,6 @@ public class GameController {
     private static List<GameObject> objectList = new ArrayList<>();
     private static List<GameObject> oldObjectList;
     private static Camera camera;
-
-    private static boolean running = true;
 
     // No instances of this class
     private GameController() {
@@ -63,6 +62,7 @@ public class GameController {
         }
     }
 
+    // TODO REMOVE
     private static double runTime = 0;
     private static int c1 = 0;
     private static int c2 = 0;
@@ -138,7 +138,7 @@ public class GameController {
     }
 
     // Add delta time to running time
-    public static void increaseRunningTime(double deltaTime) {
+    protected static void increaseRunningTime(double deltaTime) {
 
         runningTime += deltaTime;
     }

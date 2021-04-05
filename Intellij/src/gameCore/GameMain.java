@@ -2,6 +2,8 @@ package gameCore;
 
 import User.MoveTest;
 
+import javax.swing.*;
+
 public class GameMain implements Runnable {
 
     private static GameWindow gameWindow;
@@ -16,7 +18,6 @@ public class GameMain implements Runnable {
     public void run() {
 
         int physicsRate = GameController.PhysicsRate();
-
         long lastFrameTime = System.nanoTime();
         long currentFrameTime;
         long passedTime = 0;
@@ -44,16 +45,16 @@ public class GameMain implements Runnable {
 
     public static void main(String[] args) {
 
-        int refreshRate = GameController.RefreshRate();
-
         // Start the game
         Start();
 
+        // Physics thread
+        new Thread(new GameMain()).start();
+
+        int refreshRate = GameController.RefreshRate();
         long lastFrameTime = System.nanoTime();
         long currentFrameTime;
         long passedTime = 0;
-
-        new Thread(new GameMain()).start();
 
         // Game loop
         while (GameController.isRunning()) {
@@ -79,7 +80,7 @@ public class GameMain implements Runnable {
         gameWindow.closeFrame();
     }
 
-    // Before start
+    // Initial setup
     private static void Start() {
 
         updatePassedTime = 0;
@@ -93,13 +94,13 @@ public class GameMain implements Runnable {
         GameController.setCamera(new Camera());
         GameController.clearObjectList();
 
-        // Add all existing gameObjects to GameController
+        // TODO Load gameObjects from json to GameController
         GameObject pozadie = new GameObject();
         pozadie.setImage("C:/Users/samue/OneDrive/School/VAVA/Zadanie semestralne/Intellij/res/radiant_dire2.jpg");
         pozadie.setPosition(new Vector2(-250, 250));
 
         GameObject move = new MoveTest();
-        move.setImage("C:/Users/samue/OneDrive/School/VAVA/Zadanie semestralne/Intellij/res/Logo.png");
+        move.setImage("res/Logo.png");
         move.setScale(new Vector2(0.5F, 0.5F));
 
         GameController.Start();
@@ -117,15 +118,15 @@ public class GameMain implements Runnable {
         GameController.Update();
     }
 
-    // After render
-    private static void LateUpdate() {
-
-        GameController.LateUpdate();
-    }
-
     // Render stuff to the canvas
     private static void Render() {
 
         gameWindow.repaint();
+    }
+
+    // After render
+    private static void LateUpdate() {
+
+        GameController.LateUpdate();
     }
 }

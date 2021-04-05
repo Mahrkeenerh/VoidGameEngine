@@ -2,6 +2,8 @@ package User;
 
 import gameCore.*;
 
+import java.awt.event.KeyEvent;
+
 public class MoveTest extends GameObject {
 
     public void Update() {
@@ -29,6 +31,15 @@ public class MoveTest extends GameObject {
             gameObject.setPosition(position);
             gameObject.setScale(scale);
             gameObject.setImage(imagePath);
+        }
+
+        if (KeyController.IsPressed(KeyEvent.VK_ADD)) {
+
+            scale.Multiply(new Vector2(1.1F, 1.1F));
+        }
+        if (KeyController.IsPressed(109)) {
+
+            scale.Divide(new Vector2(1.1F, 1.1F));
         }
     }
 

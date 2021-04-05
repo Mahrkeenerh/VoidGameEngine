@@ -48,12 +48,6 @@ public class GameObject implements Comparable<GameObject>{
         return this.zOrder.compareTo(gameObject.getzOrder());
     }
 
-    // Add to objectList for Update and Render
-    public void addToObjectList() {
-
-        GameController.addObjectToList(this);
-    }
-
     // Move by x, y pixels
     public void Move(Vector2 v2) {
 
@@ -103,6 +97,11 @@ public class GameObject implements Comparable<GameObject>{
 
             e.printStackTrace();
         }
+    }
+
+    public void setImage(Image image) {
+
+        this.image = image;
     }
 
     public Vector2 getImageResolution() {

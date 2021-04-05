@@ -16,6 +16,7 @@ public class GameWindow extends JPanel {
         setPreferredSize(new Dimension(GameController.Width(), GameController.Height()));
 
         frame = new JFrame(GameController.WindowName());
+        frame.setIconImage((new ImageIcon("res/Icon.png")).getImage());
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
@@ -42,13 +43,23 @@ public class GameWindow extends JPanel {
 
         for (GameObject gameObject: oldObjectList) {
 
+            int centerOffsetX = GameController.Width() / 2;
+            int centerOffsetY = GameController.Height() / 2;
+
+            double cornerPositionX = gameObject.getPosition().x - camera.getPosition().x * camera.getScale().x;
+            double cornerPositionY = -(gameObject.getPosition().y - camera.getPosition().y * camera.getScale().y);
+
+            double imageOffsetX = gameObject.getImageResolution().x * gameObject.getScale().x / 2;
+            double imageOffsetY = gameObject.getImageResolution().y * gameObject.getScale().y / 2;
+
             g.drawImage(
                     gameObject.getImage(),
-                    (int) (gameObject.getPosition().x - camera.getPosition().x * camera.getScale().x),
-                    (int) -(gameObject.getPosition().y - camera.getPosition().y * camera.getScale().y),
+                    (int) (cornerPositionX + centerOffsetX - imageOffsetX),
+                    (int) (cornerPositionY + centerOffsetY - imageOffsetY),
                     (int) (gameObject.getImageResolution().x * gameObject.getScale().x / camera.getScale().x),
                     (int) (gameObject.getImageResolution().y * gameObject.getScale().y / camera.getScale().y),
-                    this);
+                    this
+            );
         }
     }
 
