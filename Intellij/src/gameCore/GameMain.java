@@ -2,8 +2,6 @@ package gameCore;
 
 import User.MoveTest;
 
-import javax.swing.*;
-
 public class GameMain implements Runnable {
 
     private static GameWindow gameWindow;
