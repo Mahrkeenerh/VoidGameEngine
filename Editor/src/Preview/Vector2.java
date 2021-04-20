@@ -47,6 +47,11 @@ public class Vector2 {
         return new Vector2(0, -1);
     }
 
+    public Vector2 Value() {
+
+        return this;
+    }
+
     public void Add(Vector2 v2) {
 
         this.x += v2.x;
@@ -63,6 +68,12 @@ public class Vector2 {
 
         this.x *= v2.x;
         this.y *= v2.y;
+    }
+
+    public void Multiply(double x, double y) {
+
+        this.x *= x;
+        this.y *= y;
     }
 
     public void Divide(Vector2 v2) {

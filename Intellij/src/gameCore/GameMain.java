@@ -89,7 +89,7 @@ public class GameMain implements Runnable {
         gameWindow.addKeyListener(new KeyController());
         gameWindow.requestFocusInWindow();
 
-        GameController.setCamera(new Camera());
+        GameController.setCamera(new GameObject());
         GameController.clearObjectList();
 
         // TODO Load gameObjects from json to GameController

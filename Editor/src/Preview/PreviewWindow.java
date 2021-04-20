@@ -18,25 +18,22 @@ public class PreviewWindow extends JPanel {
 
         super.paintComponent(g);
 
-        Camera camera = EditorController.getCamera();
+        GameObject camera = EditorController.getCamera();
 
         List<GameObject> oldObjectList = new ArrayList<>(EditorController.getObjectList());
 
         for (GameObject gameObject: oldObjectList) {
 
-            int centerOffsetX = EditorController.Width() / 2;
-            int centerOffsetY = EditorController.Height() / 2;
+            double absoluteCornerX = gameObject.getPosition().x - gameObject.getImageResolution().x * gameObject.getScale().x / 2;
+            double absoluteCornerY = -gameObject.getPosition().y - gameObject.getImageResolution().y * gameObject.getScale().y / 2;
 
-            double cornerPositionX = gameObject.getPosition().x - camera.getPosition().x * camera.getScale().x;
-            double cornerPositionY = -(gameObject.getPosition().y - camera.getPosition().y * camera.getScale().y);
-
-            double imageOffsetX = gameObject.getImageResolution().x * gameObject.getScale().x / 2;
-            double imageOffsetY = gameObject.getImageResolution().y * gameObject.getScale().y / 2;
+            double cameraCornerX = EditorController.getCamera().getPosition().x - EditorController.Width() * EditorController.getCamera().getScale().x / 2;
+            double cameraCornerY = -EditorController.getCamera().getPosition().y - EditorController.Height() * EditorController.getCamera().getScale().y / 2;
 
             g.drawImage(
                     gameObject.getImage(),
-                    (int) (cornerPositionX + centerOffsetX - imageOffsetX),
-                    (int) (cornerPositionY + centerOffsetY - imageOffsetY),
+                    (int) ((absoluteCornerX - cameraCornerX) / camera.getScale().x),
+                    (int) ((absoluteCornerY - cameraCornerY) / camera.getScale().y),
                     (int) (gameObject.getImageResolution().x * gameObject.getScale().x / camera.getScale().x),
                     (int) (gameObject.getImageResolution().y * gameObject.getScale().y / camera.getScale().y),
                     this

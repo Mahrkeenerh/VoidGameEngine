@@ -9,6 +9,8 @@ import java.io.IOException;
 
 public class GameObject implements Comparable<GameObject>{
 
+    protected String name = "NewObject";
+    protected String script = "";
     protected Vector2 position = new Vector2();
     protected Vector2 scale = new Vector2(1, 1);
     protected String imagePath = null;
@@ -18,6 +20,7 @@ public class GameObject implements Comparable<GameObject>{
 
     public GameObject() {
 
+        name += String.valueOf(EditorController.getObjectList().size());
         EditorController.addObjectToList(this);
     }
 
@@ -46,6 +49,30 @@ public class GameObject implements Comparable<GameObject>{
     public int compareTo(GameObject gameObject) {
 
         return this.zOrder.compareTo(gameObject.getzOrder());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getScript() {
+        return script;
+    }
+
+    public void setScript(String script) {
+        this.script = script;
     }
 
     // Move by x, y pixels

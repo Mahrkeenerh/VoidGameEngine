@@ -22,7 +22,7 @@ public class GameController {
 
     private static List<GameObject> objectList = new ArrayList<>();
     private static List<GameObject> oldObjectList;
-    private static Camera camera;
+    private static GameObject camera;
 
     // No instances of this class
     private GameController() {
@@ -93,12 +93,12 @@ public class GameController {
 
 
     // Get set camera
-    public static Camera getCamera() {
+    public static GameObject getCamera() {
 
         return camera;
     }
 
-    public static void setCamera(Camera newCamera) {
+    public static void setCamera(GameObject newCamera) {
 
         camera = newCamera;
     }

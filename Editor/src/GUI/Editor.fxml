@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.embed.swing.SwingNode?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="1080.0" maxWidth="1920.0" minHeight="1080.0" minWidth="1920.0" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Preview.EditorMain">
    <children>
       <SwingNode fx:id="previewPanel" />
-      <ListView layoutX="-1.0" layoutY="25.0" prefHeight="1056.0" prefWidth="251.0" style="-fx-background-color: #292929; -fx-border-color: #000000;" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#292929" height="1082.0" layoutX="1520.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="401.0" />
+      <ListView fx:id="objectList" layoutX="-1.0" layoutY="25.0" prefHeight="1056.0" prefWidth="251.0" style="-fx-background-color: #292929; -fx-border-color: #000000;">
+         <contextMenu>
+            <ContextMenu>
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#addObject" text="Add object" />
+              </items>
+            </ContextMenu>
+         </contextMenu></ListView>
+      <Rectangle fx:id="rectangle0" arcHeight="5.0" arcWidth="5.0" fill="#292929" height="1082.0" layoutX="1520.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="401.0" />
       <MenuBar layoutX="-1.0" layoutY="-1.0" prefHeight="25.0" prefWidth="1922.0">
         <menus>
           <Menu mnemonicParsing="false" style="-fx-text-fill: #ffffff;" text="File">
@@ -32,5 +45,72 @@
           </Menu>
         </menus>
       </MenuBar>
+      <Rectangle fx:id="rectangle1" arcHeight="5.0" arcWidth="5.0" fill="#292929" height="240.0" layoutX="1520.0" layoutY="25.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
+      <Label layoutX="1540.0" layoutY="35.0" text="GameObject:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="1540.0" layoutY="75.0" text="Position:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="1540.0" layoutY="110.0" text="Scale:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="1540.0" layoutY="145.0" text="Image:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="1540.0" layoutY="180.0" text="z Order:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="objectLabel" layoutX="1660.0" layoutY="35.0" prefHeight="27.0" prefWidth="250.0" text="Object name" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="positionYField" layoutX="1825.0" layoutY="76.0" prefHeight="25.0" prefWidth="75.0" text="0.0" />
+      <TextField fx:id="scaleYField" layoutX="1825.0" layoutY="111.0" prefHeight="25.0" prefWidth="75.0" text="1.0" />
+      <Label layoutX="1800.0" layoutY="75.0" text="y:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="1800.0" layoutY="110.0" text="y:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="scaleXField" layoutX="1710.0" layoutY="111.0" prefHeight="25.0" prefWidth="75.0" text="1.0" />
+      <TextField fx:id="positionXField" layoutX="1710.0" layoutY="76.0" prefHeight="25.0" prefWidth="75.0" text="0.0" />
+      <Label layoutX="1685.0" layoutY="75.0" text="x:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="1685.0" layoutY="110.0" text="x:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="imageField" editable="false" layoutX="1610.0" layoutY="146.0" prefHeight="25.0" prefWidth="175.0" text="../../../kktpeter" />
+      <Button fx:id="pickButton" layoutX="1825.0" layoutY="146.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Pick" />
+      <TextField fx:id="zOrderField" layoutX="1710.0" layoutY="181.0" prefHeight="25.0" prefWidth="75.0" text="0" />
+      <Label layoutX="1540.0" layoutY="215.0" text="Script:" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="scriptField" layoutX="1610.0" layoutY="216.0" prefHeight="25.0" prefWidth="175.0" text="MoveAround" />
+      <Button fx:id="createButton" layoutX="1825.0" layoutY="216.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Create" />
+      <TextArea fx:id="consoleArea" editable="false" layoutX="250.0" layoutY="730.0" prefHeight="350.0" prefWidth="1270.0" />
+      <Button fx:id="runButton" layoutX="860.0" layoutY="36.0" mnemonicParsing="false" onAction="#changeStyle" prefHeight="25.0" prefWidth="50.0" text="Run" />
    </children>
 </Pane>

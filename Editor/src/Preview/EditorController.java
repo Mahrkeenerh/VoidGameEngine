@@ -17,7 +17,7 @@ public class EditorController {
     private static final String windowName = "VOID EDITOR";
 
     private static List<GameObject> objectList = new ArrayList<>();
-    private static Camera camera;
+    private static GameObject camera;
 
     // No instances of this class
     private EditorController() {
@@ -32,12 +32,12 @@ public class EditorController {
 
 
     // Get set camera
-    public static Camera getCamera() {
+    public static GameObject getCamera() {
 
         return camera;
     }
 
-    public static void setCamera(Camera newCamera) {
+    public static void setCamera(GameObject newCamera) {
 
         camera = newCamera;
     }

@@ -22,7 +22,6 @@ public class KeyController extends KeyAdapter {
 
     public void keyPressed(java.awt.event.KeyEvent e) {
 
-        System.out.println(e);
         pressedDict.put(e.getKeyCode(), true);
     }
 
