@@ -64,6 +64,17 @@ public class EditorController {
         return objectList;
     }
 
+    public static GameObject getObject(String name) {
+
+        for (GameObject gameObject: objectList) {
+            if (gameObject.getName().equals(name)) {
+                return gameObject;
+            }
+        }
+
+        return null;
+    }
+
     // Clear objectList
     public static void clearObjectList() {
 

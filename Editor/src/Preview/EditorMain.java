@@ -251,6 +251,22 @@ public class EditorMain extends Application implements Runnable {
     }
 
     @FXML
+    private void selectObject() {
+
+        Platform.runLater(() -> {
+            String objectName = (String) guiWindow.getObjectList().getSelectionModel().getSelectedItem();
+
+            if (objectName == null) {
+                return;
+            }
+
+            GameObject object = EditorController.getObject(objectName);
+            activeObject = object;
+            loadObject();
+        });
+    }
+
+    @FXML
     private void addObject() {
 
         System.out.println("OBJECT");

@@ -20,7 +20,11 @@ public class GameObject implements Comparable<GameObject>{
 
     public GameObject() {
 
-        name += String.valueOf(EditorController.getObjectList().size());
+        String ending = String.valueOf(EditorController.getObjectList().size());
+        while (EditorController.getObject(name + ending) != null) {
+            name += "0";
+        }
+        name += ending;
         EditorController.addObjectToList(this);
     }
 
