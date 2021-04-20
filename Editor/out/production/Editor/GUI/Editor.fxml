@@ -22,6 +22,8 @@
             <ContextMenu>
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#addObject" text="Add object" />
+                <MenuItem mnemonicParsing="false" onAction="#editName" text="Edit name" />
+                <MenuItem mnemonicParsing="false" onAction="#removeObject" text="Remove object" />
               </items>
             </ContextMenu>
          </contextMenu></ListView>
@@ -76,8 +78,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="positionYField" layoutX="1825.0" layoutY="76.0" prefHeight="25.0" prefWidth="75.0" text="0.0" />
-      <TextField fx:id="scaleYField" layoutX="1825.0" layoutY="111.0" prefHeight="25.0" prefWidth="75.0" text="1.0" />
+      <TextField fx:id="positionYField" layoutX="1825.0" layoutY="76.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="75.0" text="0.0" />
+      <TextField fx:id="scaleYField" layoutX="1825.0" layoutY="111.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="75.0" text="1.0" />
       <Label layoutX="1800.0" layoutY="75.0" text="y:" textFill="WHITE">
          <font>
             <Font size="18.0" />
@@ -88,8 +90,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="scaleXField" layoutX="1710.0" layoutY="111.0" prefHeight="25.0" prefWidth="75.0" text="1.0" />
-      <TextField fx:id="positionXField" layoutX="1710.0" layoutY="76.0" prefHeight="25.0" prefWidth="75.0" text="0.0" />
+      <TextField fx:id="scaleXField" layoutX="1710.0" layoutY="111.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="75.0" text="1.0" />
+      <TextField fx:id="positionXField" layoutX="1710.0" layoutY="76.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="75.0" text="0.0" />
       <Label layoutX="1685.0" layoutY="75.0" text="x:" textFill="WHITE">
          <font>
             <Font size="18.0" />
@@ -100,15 +102,15 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="imageField" editable="false" layoutX="1610.0" layoutY="146.0" prefHeight="25.0" prefWidth="175.0" text="../../../kktpeter" />
+      <TextField fx:id="imageField" editable="false" layoutX="1610.0" layoutY="146.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="175.0" text="../../../kktpeter" />
       <Button fx:id="pickButton" layoutX="1825.0" layoutY="146.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Pick" />
-      <TextField fx:id="zOrderField" layoutX="1710.0" layoutY="181.0" prefHeight="25.0" prefWidth="75.0" text="0" />
+      <TextField fx:id="zOrderField" layoutX="1710.0" layoutY="181.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="75.0" text="0" />
       <Label layoutX="1540.0" layoutY="215.0" text="Script:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="scriptField" layoutX="1610.0" layoutY="216.0" prefHeight="25.0" prefWidth="175.0" text="MoveAround" />
+      <TextField fx:id="scriptField" layoutX="1610.0" layoutY="216.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="175.0" text="MoveAround" />
       <Button fx:id="createButton" layoutX="1825.0" layoutY="216.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Create" />
       <TextArea fx:id="consoleArea" editable="false" layoutX="250.0" layoutY="730.0" prefHeight="350.0" prefWidth="1270.0" />
       <Button fx:id="runButton" layoutX="860.0" layoutY="36.0" mnemonicParsing="false" onAction="#changeStyle" prefHeight="25.0" prefWidth="50.0" text="Run" />

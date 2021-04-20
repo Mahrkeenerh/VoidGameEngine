@@ -2,6 +2,8 @@ package Preview;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -101,6 +103,8 @@ public class EditorMain extends Application implements Runnable {
         EditorController.setCamera(activeObject);
         EditorController.clearObjectList();
 
+        setFocusListeners();
+
         // TODO Load every object from a file
 
         GameObject pozadie = new GameObject();
@@ -115,8 +119,8 @@ public class EditorMain extends Application implements Runnable {
             e.printStackTrace();
         }
 
-        reloadObjectList();
         guiWindow = this;
+        reloadObjectList();
         new Thread(new EditorMain()).start();
     }
 
@@ -192,6 +196,122 @@ public class EditorMain extends Application implements Runnable {
             camera.setScale(new Vector2(camera.getScale().x / multiply, camera.getScale().y / multiply));
             loadObject();
         }
+    }
+
+    private void setFocusListeners() {
+
+        positionXField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                verifyPositionX();
+            }
+        });
+
+        positionYField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                verifyPositionY();
+            }
+        });
+
+        scaleXField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                verifyScaleX();
+            }
+        });
+
+        scaleYField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                verifyScaleY();
+            }
+        });
+
+        imageField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                verifyImage();
+            }
+        });
+
+        zOrderField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                verifyZOrder();
+            }
+        });
+
+        scriptField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                verifyScript();
+            }
+        });
+    }
+
+    private void verifyPositionX() {
+
+        String text = positionXField.getText();
+        if (text.matches("[0-9]+(\\.[0-9]+)*")) {
+            activeObject.setPosition(new Vector2(Double.parseDouble(text), activeObject.getPosition().y));
+        }
+        else {
+            positionXField.setText(String.valueOf(activeObject.getPosition().x));
+        }
+    }
+
+    private void verifyPositionY() {
+
+        String text = positionYField.getText();
+        if (text.matches("[0-9]+(\\.[0-9]+)*")) {
+            activeObject.setPosition(new Vector2(activeObject.getPosition().x, Double.parseDouble(text)));
+        }
+        else {
+            positionYField.setText(String.valueOf(activeObject.getPosition().y));
+        }
+    }
+
+    private void verifyScaleX() {
+
+        String text = scaleXField.getText();
+        if (text.matches("[0-9]+(\\.[0-9]+)*")) {
+            activeObject.setScale(new Vector2(Double.parseDouble(text), activeObject.getScale().y));
+        }
+        else {
+            scaleXField.setText(String.valueOf(activeObject.getPosition().x));
+        }
+    }
+
+    private void verifyScaleY() {
+
+        String text = scaleYField.getText();
+        if (text.matches("[0-9]+(\\.[0-9]+)*")) {
+            activeObject.setScale(new Vector2(activeObject.getScale().x, Double.parseDouble(text)));
+        }
+        else {
+            scaleYField.setText(String.valueOf(activeObject.getPosition().y));
+        }
+    }
+
+    private void verifyImage() {
+
+        // TODO something something
+    }
+
+    private void verifyZOrder() {
+
+        String text = zOrderField.getText();
+        if (text.matches("[0-9]+")) {
+            activeObject.setzOrder(Integer.parseInt(text));
+        }
+        else {
+            zOrderField.setText(String.valueOf(activeObject.getzOrder()));
+        }
+    }
+
+    private void verifyScript() {
+
+        // TODO something something
+    }
+
+    @FXML
+    private void loseFocus() {
+
+        previewPanel.requestFocus();
     }
 
     private void reloadObjectList() {
@@ -270,6 +390,16 @@ public class EditorMain extends Application implements Runnable {
     private void addObject() {
 
         System.out.println("OBJECT");
+    }
+
+    @FXML
+    private void editName() {
+
+    }
+
+    @FXML
+    private void removeObject() {
+
     }
 
     @FXML
