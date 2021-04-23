@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class GameObject implements Comparable<GameObject>{
+public class GameObject implements Comparable<GameObject> {
 
     protected String name = "NewObject";
     protected String script = "";
@@ -60,6 +60,18 @@ public class GameObject implements Comparable<GameObject>{
     }
 
     public void setName(String name) {
+
+        if (EditorController.getObject(name) == null) {
+            this.name = name;
+            return;
+        }
+
+        String ending = String.valueOf(EditorController.getObjectList().size());
+        while (EditorController.getObject(name + ending) != null) {
+            name += "0";
+        }
+        name += ending;
+
         this.name = name;
     }
 
@@ -116,17 +128,16 @@ public class GameObject implements Comparable<GameObject>{
 
     public void setImage(String imagePath) {
 
-        this.imagePath = imagePath;
-        this.image = new ImageIcon(imagePath).getImage();
-
         try {
 
             BufferedImage img = ImageIO.read(new File(imagePath));
             imageResolution.x = img.getWidth();
             imageResolution.y = img.getHeight();
-        } catch (IOException e) {
 
-            e.printStackTrace();
+            this.image = new ImageIcon(imagePath).getImage();
+            this.imagePath = imagePath;
+
+        } catch (IOException e) {
         }
     }
 

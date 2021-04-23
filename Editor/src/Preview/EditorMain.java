@@ -1,9 +1,9 @@
 package Preview;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +13,17 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.json.simple.JSONObject;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditorMain extends Application implements Runnable {
 
@@ -22,7 +32,7 @@ public class EditorMain extends Application implements Runnable {
     @FXML
     private ListView objectList;
     @FXML
-    private Label objectLabel;
+    private TextField objectNameField;
     @FXML
     private TextField positionXField;
     @FXML
@@ -105,22 +115,9 @@ public class EditorMain extends Application implements Runnable {
 
         setFocusListeners();
 
-        // TODO Load every object from a file
-
-        GameObject pozadie = new GameObject();
-        pozadie.setImage("C:/Users/samue/OneDrive/School/VAVA/Zadanie semestralne/Intellij/res/radiant_dire2.jpg");
-        pozadie.setPosition(new Vector2(-250, 250));
-
-        try {
-            GameObject move = (GameObject) Class.forName("Preview.GameObject").getConstructor().newInstance();
-            move.setImage("C:/Users/samue/OneDrive/School/VAVA/Zadanie semestralne/Intellij/res/Logo.png");
-            move.setScale(new Vector2(0.5F, 0.5F));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         guiWindow = this;
         reloadObjectList();
+        loadObject();
         new Thread(new EditorMain()).start();
     }
 
@@ -198,6 +195,7 @@ public class EditorMain extends Application implements Runnable {
         }
     }
 
+    // Set focus listeners
     private void setFocusListeners() {
 
         positionXField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
@@ -239,6 +237,12 @@ public class EditorMain extends Application implements Runnable {
         scriptField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
             if (!newPropertyValue) {
                 verifyScript();
+            }
+        });
+
+        objectNameField.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+            if (!newPropertyValue) {
+                verifyObjectName();
             }
         });
     }
@@ -289,7 +293,13 @@ public class EditorMain extends Application implements Runnable {
 
     private void verifyImage() {
 
-        // TODO something something
+        try {
+            activeObject.setImage(imageField.getText());
+        } catch (Exception e) {
+            return;
+        }
+
+        loadObject();
     }
 
     private void verifyZOrder() {
@@ -305,7 +315,29 @@ public class EditorMain extends Application implements Runnable {
 
     private void verifyScript() {
 
-        // TODO something something
+        File file = new File(System.getProperty("user.dir") + "\\src\\" + guiWindow.getScriptField().getText());
+
+        if (file.exists()) {
+            activeObject.setScript("Game\\" + guiWindow.getScriptField().getText().split(".")[0]);
+            return;
+        }
+
+        guiWindow.getScriptField().setText(activeObject.getScript());
+    }
+
+    private void verifyObjectName() {
+
+        if (activeObject.getName().equals(objectNameField.getText())) {
+            return;
+        }
+
+        if (activeObject.getName().equals("Camera")) {
+            objectNameField.setText("Camera");
+            return;
+        }
+
+        activeObject.setName(objectNameField.getText());
+        reloadObjectList();
     }
 
     @FXML
@@ -316,12 +348,14 @@ public class EditorMain extends Application implements Runnable {
 
     private void reloadObjectList() {
 
-        objectList.getItems().clear();
-        objectList.getItems().add(EditorController.getCamera().getName());
+        Platform.runLater(() -> {
+            objectList.getItems().clear();
+            objectList.getItems().add(EditorController.getCamera().getName());
 
-        for (GameObject gameObject: EditorController.getObjectList()) {
-            objectList.getItems().add(gameObject.getName());
-        }
+            for (int i = 0; i < EditorController.getObjectList().size(); i++) {
+                objectList.getItems().add(EditorController.getObjectList().get(i).getName());
+            }
+        });
     }
 
     private void loadObject() {
@@ -334,7 +368,7 @@ public class EditorMain extends Application implements Runnable {
 
             Platform.runLater(() -> {
                 guiWindow.getImageField().setText("");
-                guiWindow.getzOrderField().setText("");
+                guiWindow.getzOrderField().setText(String.valueOf(activeObject.getzOrder()));
                 guiWindow.getScriptField().setText("");
 
                 guiWindow.getImageField().setEditable(false);
@@ -362,7 +396,7 @@ public class EditorMain extends Application implements Runnable {
         }
 
         Platform.runLater(() -> {
-            guiWindow.getObjectLabel().setText(activeObject.getName());
+            guiWindow.getObjectNameField().setText(activeObject.getName());
             guiWindow.getPositionXField().setText(String.valueOf(activeObject.getPosition().x));
             guiWindow.getPositionYField().setText(String.valueOf(activeObject.getPosition().y));
             guiWindow.getScaleXField().setText(String.valueOf(activeObject.getScale().x));
@@ -380,8 +414,7 @@ public class EditorMain extends Application implements Runnable {
                 return;
             }
 
-            GameObject object = EditorController.getObject(objectName);
-            activeObject = object;
+            activeObject = EditorController.getObject(objectName);
             loadObject();
         });
     }
@@ -389,17 +422,26 @@ public class EditorMain extends Application implements Runnable {
     @FXML
     private void addObject() {
 
-        System.out.println("OBJECT");
-    }
-
-    @FXML
-    private void editName() {
-
+        new GameObject();
+        reloadObjectList();
     }
 
     @FXML
     private void removeObject() {
 
+        Platform.runLater(() -> {
+            String objectName = (String) guiWindow.getObjectList().getSelectionModel().getSelectedItem();
+
+            if (objectName == null || activeObject.getName().equals("Camera)")) {
+                return;
+            }
+
+            activeObject = EditorController.getObject(objectName);
+            EditorController.removeObject(activeObject);
+            activeObject = null;
+            reloadObjectList();
+            loadObject();
+        });
     }
 
     @FXML
@@ -423,6 +465,164 @@ public class EditorMain extends Application implements Runnable {
         previewPanel.getScene().getStylesheets().add(getClass().getResource("/GUI/" + activeStyle).toExternalForm());
     }
 
+    @FXML
+    private void saveToFile() {
+
+        List outList = new ArrayList<>();
+
+        List cameraObj = new ArrayList<>();
+        cameraObj.add("");
+        cameraObj.add(EditorController.getCamera().getPosition().x);
+        cameraObj.add(EditorController.getCamera().getPosition().y);
+        cameraObj.add(EditorController.getCamera().getScale().x);
+        cameraObj.add(EditorController.getCamera().getScale().y);
+        cameraObj.add(EditorController.getCamera().getImagePath());
+        cameraObj.add(EditorController.getCamera().getzOrder());
+
+        outList.add(cameraObj);
+
+        for (GameObject gameObject: EditorController.getObjectList()) {
+
+            List object = new ArrayList<>();
+
+            object.add(gameObject.getScript());
+            object.add(gameObject.getPosition().x);
+            object.add(gameObject.getPosition().y);
+            object.add(gameObject.getScale().x);
+            object.add(gameObject.getScale().y);
+            object.add(gameObject.getImagePath());
+            object.add(gameObject.getzOrder());
+            object.add(gameObject.getName());
+
+            outList.add(object);
+        }
+
+        try {
+
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            directoryChooser.setTitle("Save project at");
+            directoryChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+            File file = directoryChooser.showDialog(createButton.getScene().getWindow());
+
+            if (file == null) {
+                return;
+            }
+
+            FileWriter fileWriter = new FileWriter(file + "\\objectList.json");
+            fileWriter.write(new Gson().toJson(outList));
+            fileWriter.flush();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("SUCCESS");
+            alert.setHeaderText(null);
+            alert.setContentText("Project saved.");
+            alert.showAndWait();
+        } catch (IOException e) {
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("FAILURE");
+            alert.setHeaderText(null);
+            alert.setContentText("There was an error while saving.");
+            alert.showAndWait();
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void loadFromFile() {
+
+        try {
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Load project");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON", "*.json"));
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+
+            File file = fileChooser.showOpenDialog(createButton.getScene().getWindow());
+
+            if (file == null) {
+                return;
+            }
+
+            FileReader fileReader = new FileReader(file);
+
+            List objectList = new Gson().fromJson(fileReader, List.class);
+
+            activeObject = new GameObject();
+            activeObject.setName("Camera");
+            activeObject.setPosition(new Vector2((double) ((ArrayList) objectList.get(0)).get(1),
+                    (double) ((ArrayList) objectList.get(0)).get(1)));
+            activeObject.setPosition(new Vector2((double) ((ArrayList) objectList.get(0)).get(3),
+                    (double) ((ArrayList) objectList.get(0)).get(4)));
+            EditorController.setCamera(activeObject);
+            EditorController.clearObjectList();
+
+            for (int i = 1; i < objectList.size(); i++) {
+
+                GameObject gameObject = new GameObject();
+
+                gameObject.setScript((String) ((ArrayList) objectList.get(i)).get(0));
+                gameObject.setPosition(new Vector2((double) ((ArrayList) objectList.get(i)).get(1),
+                        (double) ((ArrayList) objectList.get(i)).get(2)));
+                gameObject.setScale(new Vector2((double) ((ArrayList) objectList.get(i)).get(3),
+                        (double) ((ArrayList) objectList.get(i)).get(4)));
+
+                if (((ArrayList) objectList.get(i)).get(5) != null) {
+                    gameObject.setImage((String) ((ArrayList) objectList.get(i)).get(5));
+                }
+
+                gameObject.setzOrder((int) ((double) ((ArrayList) objectList.get(i)).get(6)));
+                gameObject.setName((String) ((ArrayList) objectList.get(i)).get(7));
+            }
+
+            reloadObjectList();
+            loadObject();
+        } catch (Exception e) {
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("FAILURE");
+            alert.setHeaderText(null);
+            alert.setContentText("There was an error while loading.");
+            alert.showAndWait();
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void pickPicture() {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Load image");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image", "*.jpg", "*.jpeg", "*.png"));
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+
+        File file = fileChooser.showOpenDialog(createButton.getScene().getWindow());
+
+        if (file == null) {
+            return;
+        }
+
+        activeObject.setImage(file.getPath());
+        loadObject();
+    }
+
+    @FXML
+    private void createScript() {
+
+        try {
+            FileWriter newScriptWriter = new FileWriter("src\\Game\\NewScript.java");
+            newScriptWriter.write("package Game;" +
+                    "\n\n" +
+                    "import gameCore.*;" +
+                    "\n\n" +
+                    "public class NewScript extends GameObject {" +
+                    "\n\n" +
+                    "}");
+            newScriptWriter.close();
+        } catch (IOException e) {
+        }
+    }
+
     public SwingNode getPreviewPanel() {
         return previewPanel;
     }
@@ -431,8 +631,8 @@ public class EditorMain extends Application implements Runnable {
         return objectList;
     }
 
-    public Label getObjectLabel() {
-        return objectLabel;
+    public TextField getObjectNameField() {
+        return objectNameField;
     }
 
     public TextField getPositionXField() {

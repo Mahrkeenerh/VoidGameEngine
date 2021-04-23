@@ -1,4 +1,4 @@
-package Preview;
+package gameCore;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -10,7 +10,7 @@ public class KeyController extends KeyAdapter {
     public static Dictionary<Integer, Boolean> pressedDict = new Hashtable<>();
 
     public KeyController() {
-        
+
     }
 
     public void keyTyped(java.awt.event.KeyEvent e) {

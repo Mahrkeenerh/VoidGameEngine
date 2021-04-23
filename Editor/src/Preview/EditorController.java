@@ -75,6 +75,13 @@ public class EditorController {
         return null;
     }
 
+    public static void removeObject(GameObject object) {
+
+        if (object != null) {
+            objectList.remove(object);
+        }
+    }
+
     // Clear objectList
     public static void clearObjectList() {
 
