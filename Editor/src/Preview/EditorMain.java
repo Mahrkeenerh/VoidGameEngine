@@ -1,8 +1,6 @@
 package Preview;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import gameCore.GameMain;
 import gameCore.GameThread;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -18,13 +16,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.json.simple.JSONObject;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
 import java.io.*;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -59,13 +54,32 @@ public class EditorMain extends Application implements Runnable {
     @FXML
     private Button runButton;
     @FXML
+    private Button clearButton;
+    @FXML
     private TextArea consoleArea;
     @FXML
     private Rectangle rectangle0;
     @FXML
     private Rectangle rectangle1;
+    @FXML
+    private Menu fileMenu;
+    @FXML
+    private Menu editMenu;
+    @FXML
+    private Label objectLabel;
+    @FXML
+    private Label positionLabel;
+    @FXML
+    private Label scaleLabel;
+    @FXML
+    private Label imageLabel;
+    @FXML
+    private Label zOrderLabel;
+    @FXML
+    private Label scriptLabel;
 
     private static String activeStyle;
+    private static String activeLanguage;
     private static GameObject activeObject;
 
     private static PreviewWindow previewWindow;
@@ -117,6 +131,8 @@ public class EditorMain extends Application implements Runnable {
         activeObject.setName("Camera");
         EditorController.setCamera(activeObject);
         EditorController.clearObjectList();
+
+        activeLanguage = "English";
 
         setFocusListeners();
 
@@ -464,6 +480,45 @@ public class EditorMain extends Application implements Runnable {
 
         previewPanel.getScene().getStylesheets().clear();
         previewPanel.getScene().getStylesheets().add(getClass().getResource("/GUI/" + activeStyle).toExternalForm());
+    }
+
+    @FXML
+    private void changeLanguage() {
+
+        if (activeLanguage.equals("Slovak")) {
+
+            pickButton.setText("Pick");
+            createButton.setText("Create");
+            runButton.setText("Run");
+            clearButton.setText("Clear");
+            fileMenu.setText("File");
+            editMenu.setText("Edit");
+            objectLabel.setText("GameObject:");
+            positionLabel.setText("Position:");
+            scaleLabel.setText("Scale:");
+            imageLabel.setText("Image:");
+            zOrderLabel.setText("z Order:");
+            scriptLabel.setText("Script:");
+
+            activeLanguage = "English";
+        }
+        else {
+
+            pickButton.setText("Vyber");
+            createButton.setText("Vytvor");
+            runButton.setText("Spusti");
+            clearButton.setText("Vycisti");
+            fileMenu.setText("Subor");
+            editMenu.setText("Uprav");
+            objectLabel.setText("HernyObjekt:");
+            positionLabel.setText("Pozicia:");
+            scaleLabel.setText("Mierka:");
+            imageLabel.setText("Obraz:");
+            zOrderLabel.setText("z Poradie:");
+            scriptLabel.setText("Skript:");
+
+            activeLanguage = "Slovak";
+        }
     }
 
     @FXML

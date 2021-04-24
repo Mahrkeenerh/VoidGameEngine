@@ -29,42 +29,43 @@
       <Rectangle fx:id="rectangle0" arcHeight="5.0" arcWidth="5.0" fill="#292929" height="1082.0" layoutX="1520.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="401.0" />
       <MenuBar layoutX="-1.0" layoutY="-1.0" prefHeight="25.0" prefWidth="1922.0">
         <menus>
-          <Menu mnemonicParsing="false" style="-fx-text-fill: #ffffff;" text="File">
+          <Menu fx:id="fileMenu" mnemonicParsing="false" style="-fx-text-fill: #ffffff;" text="File">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#newProject" text="New project" />
               <MenuItem mnemonicParsing="false" onAction="#saveToFile" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#loadFromFile" text="Load" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#changeStyle" text="Change theme" />
+                  <MenuItem mnemonicParsing="false" onAction="#changeLanguage" text="Change language" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
       <Rectangle fx:id="rectangle1" arcHeight="5.0" arcWidth="5.0" fill="#292929" height="240.0" layoutX="1520.0" layoutY="25.0" stroke="BLACK" strokeType="INSIDE" width="400.0" />
-      <Label layoutX="1540.0" layoutY="35.0" text="GameObject:" textFill="WHITE">
+      <Label fx:id="objectLabel" layoutX="1540.0" layoutY="35.0" text="GameObject:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="1540.0" layoutY="75.0" text="Position:" textFill="WHITE">
+      <Label fx:id="positionLabel" layoutX="1540.0" layoutY="75.0" text="Position:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="1540.0" layoutY="110.0" text="Scale:" textFill="WHITE">
+      <Label fx:id="scaleLabel" layoutX="1540.0" layoutY="110.0" text="Scale:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="1540.0" layoutY="145.0" text="Image:" textFill="WHITE">
+      <Label fx:id="imageLabel" layoutX="1540.0" layoutY="145.0" text="Image:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="1540.0" layoutY="180.0" text="z Order:" textFill="WHITE">
+      <Label fx:id="zOrderLabel" layoutX="1540.0" layoutY="180.0" text="z Order:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
@@ -96,7 +97,7 @@
       <TextField fx:id="imageField" editable="false" layoutX="1610.0" layoutY="146.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="175.0" text="../../../image" />
       <Button fx:id="pickButton" layoutX="1825.0" layoutY="146.0" mnemonicParsing="false" onMouseReleased="#pickPicture" prefHeight="25.0" prefWidth="75.0" text="Pick" />
       <TextField fx:id="zOrderField" layoutX="1710.0" layoutY="181.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="75.0" text="0" />
-      <Label layoutX="1540.0" layoutY="215.0" text="Script:" textFill="WHITE">
+      <Label fx:id="scriptLabel" layoutX="1540.0" layoutY="215.0" text="Script:" textFill="WHITE">
          <font>
             <Font size="18.0" />
          </font>
@@ -106,6 +107,6 @@
       <TextArea fx:id="consoleArea" editable="false" layoutX="250.0" layoutY="730.0" prefHeight="350.0" prefWidth="1270.0" />
       <Button fx:id="runButton" layoutX="860.0" layoutY="36.0" mnemonicParsing="false" onMouseReleased="#compile" prefHeight="25.0" prefWidth="50.0" text="Run" />
       <TextField fx:id="objectNameField" layoutX="1710.0" layoutY="36.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="190.0" text="0.0" />
-      <Button layoutX="1445.0" layoutY="730.0" mnemonicParsing="false" onMouseReleased="#clearConsole" prefHeight="25.0" prefWidth="75.0" text="Clear" />
+      <Button fx:id="clearButton" layoutX="1445.0" layoutY="730.0" mnemonicParsing="false" onMouseReleased="#clearConsole" prefHeight="25.0" prefWidth="75.0" text="Clear" />
    </children>
 </Pane>
