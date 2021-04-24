@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>Preview</OriginalElement>
+  <nodes>
+    <node x="604.3527976190477" y="977.5">gameCore.GameThread</node>
+    <node x="799.2083333333334" y="2317.0">gameCore.GameController</node>
+    <node x="757.8058928571427" y="110.0">gameCore.KeyController</node>
+    <node x="336.875" y="1178.0">Preview.EditorMain</node>
+    <node x="355.41303571428557" y="487.0">Preview.GameObject</node>
+    <node x="1032.875" y="55.0">gameCore.Vector2</node>
+    <node x="815.3058928571427" y="553.5">gameCore.GameMain</node>
+    <node x="942.0281150793649" y="2980.0">gameCore.GameObject</node>
+    <node x="10.5" y="966.0">Preview.PreviewWindow</node>
+    <node x="430.26385714285703" y="33.0">Preview.Vector2</node>
+    <node x="700.2685714285712" y="3328.0">gameCore.GameWindow</node>
+    <node x="250.5" y="911.0">Preview.KeyController</node>
+    <node x="171.20994047619047" y="0.0">Preview.EditorController</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="Preview.EditorController" target="Preview.GameObject">
+      <point x="19.58333333333337" y="203.5" />
+      <point x="308.29327380952384" y="457.0" />
+      <point x="398.27017857142846" y="457.0" />
+      <point x="-57.14285714285711" y="-182.0" />
+    </edge>
+    <edge source="gameCore.GameObject" target="gameCore.Vector2">
+      <point x="44.44444444444443" y="-149.0" />
+      <point x="1086.4725595238092" y="2940.0" />
+      <point x="1117.139226190476" y="2940.0" />
+      <point x="1117.139226190476" y="467.0" />
+      <point x="1100.375" y="467.0" />
+      <point x="-22.5" y="148.5" />
+    </edge>
+    <edge source="Preview.EditorMain" target="Preview.PreviewWindow">
+      <point x="-62.650000000000034" y="-544.5" />
+      <point x="363.72499999999997" y="1148.0" />
+      <point x="65.5" y="1148.0" />
+      <point x="-55.0" y="38.5" />
+    </edge>
+    <edge source="gameCore.GameMain" target="gameCore.KeyController">
+      <point x="-40.0" y="-115.5" />
+      <point x="0.0" y="93.5" />
+    </edge>
+    <edge source="Preview.PreviewWindow" target="Preview.GameObject">
+      <point x="55.0" y="-38.5" />
+      <point x="175.5" y="891.0" />
+      <point x="380.41303571428557" y="891.0" />
+      <point x="-75.0" y="182.0" />
+    </edge>
+    <edge source="gameCore.GameController" target="Preview.EditorMain">
+      <point x="-58.75" y="-291.5" />
+      <point x="857.9583333333334" y="2292.0" />
+      <point x="426.375" y="2292.0" />
+      <point x="0.0" y="544.5" />
+    </edge>
+    <edge source="gameCore.GameWindow" target="gameCore.GameController">
+      <point x="27.5" y="-49.5" />
+      <point x="837.7685714285712" y="3303.0" />
+      <point x="859.2864285714284" y="3303.0" />
+      <point x="859.2864285714284" y="2960.0" />
+      <point x="822.7083333333334" y="2960.0" />
+      <point x="-94.0" y="291.5" />
+    </edge>
+    <edge source="gameCore.GameMain" target="gameCore.GameWindow">
+      <point x="-13.333333333333371" y="115.5" />
+      <point x="881.9725595238093" y="891.0" />
+      <point x="788.7083333333334" y="891.0" />
+      <point x="788.7083333333334" y="3303.0" />
+      <point x="782.7685714285712" y="3303.0" />
+      <point x="-27.5" y="-49.5" />
+    </edge>
+    <edge source="Preview.EditorMain" target="Preview.EditorController">
+      <point x="-80.55000000000007" y="-544.5" />
+      <point x="345.82499999999993" y="1158.0" />
+      <point x="0.0" y="1158.0" />
+      <point x="0.0" y="457.0" />
+      <point x="190.79327380952384" y="457.0" />
+      <point x="-97.91666666666663" y="203.5" />
+    </edge>
+    <edge source="Preview.EditorMain" target="Preview.GameObject">
+      <point x="8.949999999999989" y="-544.5" />
+      <point x="435.325" y="1138.0" />
+      <point x="456.0" y="1138.0" />
+      <point x="456.0" y="891.0" />
+      <point x="430.41303571428557" y="891.0" />
+      <point x="-25.0" y="182.0" />
+    </edge>
+    <edge source="Preview.EditorMain" target="Preview.KeyController">
+      <point x="-26.850000000000023" y="-544.5" />
+      <point x="399.525" y="1128.0" />
+      <point x="299.25" y="1128.0" />
+      <point x="-48.75" y="93.5" />
+    </edge>
+    <edge source="Preview.PreviewWindow" target="Preview.EditorController">
+      <point x="-55.0" y="-38.5" />
+      <point x="65.5" y="467.0" />
+      <point x="229.95994047619047" y="467.0" />
+      <point x="-58.75" y="203.5" />
+    </edge>
+    <edge source="gameCore.GameMain" target="gameCore.Vector2">
+      <point x="40.0" y="-115.5" />
+      <point x="935.3058928571427" y="467.0" />
+      <point x="1055.375" y="467.0" />
+      <point x="-67.5" y="148.5" />
+    </edge>
+    <edge source="Preview.GameObject" target="Preview.Vector2">
+      <point x="28.571428571428584" y="-182.0" />
+      <point x="483.9844642857141" y="427.0" />
+      <point x="456.13885714285703" y="427.0" />
+      <point x="-77.625" y="170.5" />
+    </edge>
+    <edge source="gameCore.GameObject" target="gameCore.GameController">
+      <point x="-88.88888888888891" y="-149.0" />
+      <point x="953.1392261904759" y="2960.0" />
+      <point x="869.7083333333334" y="2960.0" />
+      <point x="-47.0" y="291.5" />
+    </edge>
+    <edge source="gameCore.GameWindow" target="gameCore.GameObject">
+      <point x="82.5" y="-49.5" />
+      <point x="892.7685714285712" y="3303.0" />
+      <point x="1042.0281150793649" y="3303.0" />
+      <point x="0.0" y="149.0" />
+    </edge>
+    <edge source="Preview.EditorMain" target="Preview.Vector2">
+      <point x="62.64999999999998" y="-544.5" />
+      <point x="489.025" y="1148.0" />
+      <point x="593.8527976190477" y="1148.0" />
+      <point x="593.8527976190477" y="467.0" />
+      <point x="611.388857142857" y="467.0" />
+      <point x="77.625" y="170.5" />
+    </edge>
+    <edge source="gameCore.GameController" target="gameCore.GameObject">
+      <point x="47.0" y="291.5" />
+      <point x="963.7083333333334" y="2940.0" />
+      <point x="997.5836706349204" y="2940.0" />
+      <point x="-44.44444444444446" y="-149.0" />
+    </edge>
+    <edge source="Preview.EditorMain" target="gameCore.GameThread">
+      <point x="80.55000000000001" y="-544.5" />
+      <point x="506.925" y="1158.0" />
+      <point x="668.3527976190477" y="1158.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="gameCore.GameMain" target="gameCore.GameObject">
+      <point x="40.0" y="115.5" />
+      <point x="935.3058928571427" y="881.0" />
+      <point x="1072.2192142857143" y="881.0" />
+      <point x="1072.2192142857143" y="2920.0" />
+      <point x="1042.0281150793649" y="2920.0" />
+      <point x="0.0" y="-149.0" />
+    </edge>
+    <edge source="Preview.GameObject" target="Preview.EditorController">
+      <point x="-85.71428571428572" y="-182.0" />
+      <point x="369.69874999999985" y="467.0" />
+      <point x="269.1266071428571" y="467.0" />
+      <point x="-19.583333333333314" y="203.5" />
+    </edge>
+    <edge source="gameCore.GameMain" target="gameCore.GameController">
+      <point x="13.333333333333371" y="115.5" />
+      <point x="908.639226190476" y="891.0" />
+      <point x="975.4583333333334" y="891.0" />
+      <point x="58.75" y="-291.5" />
+    </edge>
+    <edge source="gameCore.GameThread" target="gameCore.GameMain">
+      <point x="0.0" y="-27.0" />
+      <point x="668.3527976190477" y="871.0" />
+      <point x="828.639226190476" y="871.0" />
+      <point x="-66.66666666666663" y="115.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.670186839967506" x="598.0" y="1782.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
