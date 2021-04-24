@@ -37,15 +37,6 @@ public class GameController {
 
         running = true;
         runningTime = 0;
-
-        objectList = new ArrayList<>();
-
-        oldObjectList = new ArrayList<>(objectList);
-
-        for (GameObject gameObject: oldObjectList) {
-
-            gameObject.Start();
-        }
     }
 
     // Called in fixed time intervals
@@ -164,6 +155,8 @@ public class GameController {
 
     // Stop the game
     public static void Stop() {
+
+        consoleAdd("Finished: 0");
 
         running = false;
     }

@@ -44,14 +44,5 @@ public class MoveTest extends GameObject {
         else {
             canFire = true;
         }
-
-        if (KeyController.IsPressed(KeyEvent.VK_ADD)) {
-
-            scale.Multiply(new Vector2(1.1F, 1.1F));
-        }
-        if (KeyController.IsPressed(109)) {
-
-            scale.Divide(new Vector2(1.1F, 1.1F));
-        }
     }
 }

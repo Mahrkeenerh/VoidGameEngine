@@ -19,6 +19,7 @@ public class GameObject implements Comparable<GameObject>{
     public GameObject() {
 
         GameController.addObjectToList(this);
+        Start();
     }
 
     // Called once at the start

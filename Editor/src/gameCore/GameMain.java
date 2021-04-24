@@ -7,6 +7,8 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.FileReader;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -130,6 +132,8 @@ public class GameMain implements Runnable {
 
     private static void load() {
 
+        GameController.clearObjectList();
+
         try {
             FileReader fileReader = new FileReader(System.getProperty("user.dir") + "\\src\\objectList.json");
 
@@ -152,7 +156,7 @@ public class GameMain implements Runnable {
                 }
                 else {
                     String className = ((String) ((ArrayList) objectList.get(i)).get(0)).split("[.]")[0].replace('\\', '.');
-                    gameObject = (GameObject) Class.forName(className).getConstructor().newInstance();
+                    gameObject = (GameObject) Class.forName(className).getConstructor().newInstance();;
                 }
 
                 gameObject.setPosition(new Vector2((double) ((ArrayList) objectList.get(i)).get(1),

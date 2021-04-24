@@ -254,46 +254,42 @@ public class EditorMain extends Application implements Runnable {
 
     private void verifyPositionX() {
 
-        String text = positionXField.getText();
+        String text = "0" + positionXField.getText();
         if (text.matches("[0-9]+([.][0-9]+){0,1}")) {
             activeObject.setPosition(new Vector2(Double.parseDouble(text), activeObject.getPosition().y));
         }
-        else {
-            positionXField.setText(String.valueOf(activeObject.getPosition().x));
-        }
+
+        positionXField.setText(String.valueOf(activeObject.getPosition().x));
     }
 
     private void verifyPositionY() {
 
-        String text = positionYField.getText();
+        String text = "0" + positionYField.getText();
         if (text.matches("[0-9]+([.][0-9]+){0,1}")) {
             activeObject.setPosition(new Vector2(activeObject.getPosition().x, Double.parseDouble(text)));
         }
-        else {
-            positionYField.setText(String.valueOf(activeObject.getPosition().y));
-        }
+
+        positionYField.setText(String.valueOf(activeObject.getPosition().y));
     }
 
     private void verifyScaleX() {
 
-        String text = scaleXField.getText();
+        String text = "0" + scaleXField.getText();
         if (text.matches("[0-9]+([.][0-9]+){0,1}")) {
             activeObject.setScale(new Vector2(Double.parseDouble(text), activeObject.getScale().y));
         }
-        else {
-            scaleXField.setText(String.valueOf(activeObject.getScale().x));
-        }
+
+        scaleXField.setText(String.valueOf(activeObject.getScale().x));
     }
 
     private void verifyScaleY() {
 
-        String text = scaleYField.getText();
+        String text = "0" + scaleYField.getText();
         if (text.matches("[0-9]+([.][0-9]+){0,1}")) {
             activeObject.setScale(new Vector2(activeObject.getScale().x, Double.parseDouble(text)));
         }
-        else {
-            scaleYField.setText(String.valueOf(activeObject.getScale().y));
-        }
+
+        scaleYField.setText(String.valueOf(activeObject.getScale().y));
     }
 
     private void verifyImage() {
@@ -642,6 +638,11 @@ public class EditorMain extends Application implements Runnable {
                     "\n\n" +
                     "}");
             newScriptWriter.close();
+
+            activeObject.setScript("Game\\NewScript.java");
+            scriptField.setText("Game\\NewScript.java");
+            verifyScript();
+
         } catch (IOException e) {
         }
     }
@@ -671,7 +672,14 @@ public class EditorMain extends Application implements Runnable {
             }
         };
 
-        int compiled = compiler.run(null, null, out, System.getProperty("user.dir") + "\\src\\gameCore\\GameMain.java");
+        int compiled = 0;
+
+        for (GameObject gameObject: EditorController.getObjectList()) {
+
+            if (!gameObject.getScript().isEmpty()) {
+                compiled += compiler.run(null, null, out, System.getProperty("user.dir") + "\\src\\" + gameObject.getScript());
+            }
+        }
 
         String outError = "";
         if (!out.toString().isEmpty()) {
@@ -689,7 +697,6 @@ public class EditorMain extends Application implements Runnable {
         } catch (Exception e) {
             Logger logger = Logger.getLogger("Logger");
             logger.log(Level.SEVERE, e.toString());
-
             consoleArea.setText(consoleArea.getText() + "\n" + e.toString());
         }
     }
