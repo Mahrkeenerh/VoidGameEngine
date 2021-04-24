@@ -2,6 +2,8 @@ package Preview;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import gameCore.GameMain;
+import gameCore.GameThread;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
@@ -18,10 +20,11 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.json.simple.JSONObject;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import javax.tools.JavaCompiler;
+import javax.tools.ToolProvider;
+import java.io.*;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -250,7 +253,7 @@ public class EditorMain extends Application implements Runnable {
     private void verifyPositionX() {
 
         String text = positionXField.getText();
-        if (text.matches("[0-9]+(\\.[0-9]+)*")) {
+        if (text.matches("[0-9]+([.][0-9]+){0,1}")) {
             activeObject.setPosition(new Vector2(Double.parseDouble(text), activeObject.getPosition().y));
         }
         else {
@@ -261,7 +264,7 @@ public class EditorMain extends Application implements Runnable {
     private void verifyPositionY() {
 
         String text = positionYField.getText();
-        if (text.matches("[0-9]+(\\.[0-9]+)*")) {
+        if (text.matches("[0-9]+([.][0-9]+){0,1}")) {
             activeObject.setPosition(new Vector2(activeObject.getPosition().x, Double.parseDouble(text)));
         }
         else {
@@ -272,22 +275,22 @@ public class EditorMain extends Application implements Runnable {
     private void verifyScaleX() {
 
         String text = scaleXField.getText();
-        if (text.matches("[0-9]+(\\.[0-9]+)*")) {
+        if (text.matches("[0-9]+([.][0-9]+){0,1}")) {
             activeObject.setScale(new Vector2(Double.parseDouble(text), activeObject.getScale().y));
         }
         else {
-            scaleXField.setText(String.valueOf(activeObject.getPosition().x));
+            scaleXField.setText(String.valueOf(activeObject.getScale().x));
         }
     }
 
     private void verifyScaleY() {
 
         String text = scaleYField.getText();
-        if (text.matches("[0-9]+(\\.[0-9]+)*")) {
+        if (text.matches("[0-9]+([.][0-9]+){0,1}")) {
             activeObject.setScale(new Vector2(activeObject.getScale().x, Double.parseDouble(text)));
         }
         else {
-            scaleYField.setText(String.valueOf(activeObject.getPosition().y));
+            scaleYField.setText(String.valueOf(activeObject.getScale().y));
         }
     }
 
@@ -318,7 +321,7 @@ public class EditorMain extends Application implements Runnable {
         File file = new File(System.getProperty("user.dir") + "\\src\\" + guiWindow.getScriptField().getText());
 
         if (file.exists()) {
-            activeObject.setScript("Game\\" + guiWindow.getScriptField().getText().split(".")[0]);
+            activeObject.setScript(guiWindow.getScriptField().getText());
             return;
         }
 
@@ -466,7 +469,19 @@ public class EditorMain extends Application implements Runnable {
     }
 
     @FXML
-    private void saveToFile() {
+    private void newProject() {
+
+        activeObject = new GameObject();
+        activeObject.setName("Camera");
+
+        EditorController.setCamera(activeObject);
+        EditorController.clearObjectList();
+
+        reloadObjectList();
+        loadObject();
+    }
+
+    private void save(String path) throws Exception {
 
         List outList = new ArrayList<>();
 
@@ -497,6 +512,14 @@ public class EditorMain extends Application implements Runnable {
             outList.add(object);
         }
 
+        FileWriter fileWriter = new FileWriter(path + "\\objectList.json");
+        fileWriter.write(new Gson().toJson(outList));
+        fileWriter.close();
+    }
+
+    @FXML
+    private void saveToFile() {
+
         try {
 
             DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -508,16 +531,14 @@ public class EditorMain extends Application implements Runnable {
                 return;
             }
 
-            FileWriter fileWriter = new FileWriter(file + "\\objectList.json");
-            fileWriter.write(new Gson().toJson(outList));
-            fileWriter.flush();
+            save(file.getPath());
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("SUCCESS");
             alert.setHeaderText(null);
             alert.setContentText("Project saved.");
             alert.showAndWait();
-        } catch (IOException e) {
+        } catch (Exception e) {
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("FAILURE");
@@ -621,6 +642,62 @@ public class EditorMain extends Application implements Runnable {
             newScriptWriter.close();
         } catch (IOException e) {
         }
+    }
+
+    @FXML
+    private void compile() {
+
+        try {
+            save("src");
+        } catch (Exception e) {
+            return;
+        }
+
+        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        OutputStream out = new OutputStream() {
+
+            private StringBuilder sb = new StringBuilder();
+
+            @Override
+            public void write(int b) throws IOException {
+                this.sb.append((char) b);
+            }
+
+            @Override
+            public String toString() {
+                return this.sb.toString();
+            }
+        };
+
+        int compiled = compiler.run(null, null, out, System.getProperty("user.dir") + "\\src\\gameCore\\GameMain.java");
+
+        String outError = "";
+        if (!out.toString().isEmpty()) {
+            outError = "\n" + out.toString();
+        }
+
+        consoleArea.setText(consoleArea.getText() + "\nCompilation: " + String.valueOf(compiled) + outError + "\n");
+
+        if (compiled != 0) {
+            return;
+        }
+
+        try {
+            new Thread(new GameThread()).start();
+        } catch (Exception e) {
+            consoleArea.setText(consoleArea.getText() + "\n" + e.toString());
+        }
+    }
+
+    @FXML
+    private void clearConsole() {
+
+        consoleArea.setText("");
+    }
+
+    public static void consoleAdd(String text) {
+
+        guiWindow.getConsoleArea().setText(guiWindow.getConsoleArea().getText() + text);
     }
 
     public SwingNode getPreviewPanel() {

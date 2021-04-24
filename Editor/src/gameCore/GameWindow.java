@@ -2,6 +2,9 @@ package gameCore;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,15 @@ public class GameWindow extends JPanel {
         frame = new JFrame(GameController.WindowName());
         frame.setIconImage((new ImageIcon("res/Icon.png")).getImage());
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        WindowListener exitListener = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                GameController.Stop();
+            }
+        };
+
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        frame.addWindowListener(exitListener);
         frame.setLayout(new BorderLayout());
         frame.add(this, BorderLayout.CENTER);
         frame.pack();

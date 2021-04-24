@@ -31,6 +31,7 @@
         <menus>
           <Menu mnemonicParsing="false" style="-fx-text-fill: #ffffff;" text="File">
             <items>
+                  <MenuItem mnemonicParsing="false" onAction="#newProject" text="New project" />
               <MenuItem mnemonicParsing="false" onAction="#saveToFile" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#loadFromFile" text="Load" />
             </items>
@@ -103,7 +104,8 @@
       <TextField fx:id="scriptField" layoutX="1610.0" layoutY="216.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="175.0" text="MoveAround" />
       <Button fx:id="createButton" layoutX="1825.0" layoutY="216.0" mnemonicParsing="false" onMouseReleased="#createScript" prefHeight="25.0" prefWidth="75.0" text="Create" />
       <TextArea fx:id="consoleArea" editable="false" layoutX="250.0" layoutY="730.0" prefHeight="350.0" prefWidth="1270.0" />
-      <Button fx:id="runButton" layoutX="860.0" layoutY="36.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="50.0" text="Run" />
+      <Button fx:id="runButton" layoutX="860.0" layoutY="36.0" mnemonicParsing="false" onMouseReleased="#compile" prefHeight="25.0" prefWidth="50.0" text="Run" />
       <TextField fx:id="objectNameField" layoutX="1710.0" layoutY="36.0" onAction="#loseFocus" prefHeight="25.0" prefWidth="190.0" text="0.0" />
+      <Button layoutX="1445.0" layoutY="730.0" mnemonicParsing="false" onMouseReleased="#clearConsole" prefHeight="25.0" prefWidth="75.0" text="Clear" />
    </children>
 </Pane>

@@ -1,12 +1,14 @@
 package gameCore;
 
+import Preview.EditorMain;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class GameController {
 
-    // Globals - config.json
+    // Globals
     private static final int refreshRate = 300;
     private static final int physicsRate = 75;
 
@@ -33,6 +35,11 @@ public class GameController {
     // Called at the start of game in zOrder
     public static void Start() {
 
+        running = true;
+        runningTime = 0;
+
+        objectList = new ArrayList<>();
+
         oldObjectList = new ArrayList<>(objectList);
 
         for (GameObject gameObject: oldObjectList) {
@@ -49,7 +56,7 @@ public class GameController {
         if (runTime > 1) {
 
             runTime = 0;
-            System.out.format("Physics: %d FPS: %d\n", c1, c2);
+            consoleAdd(String.format("Physics: %d FPS: %d\n", c1, c2));
             c1 = 0;
             c2 = 0;
         }
@@ -91,6 +98,12 @@ public class GameController {
         }
     }
 
+
+    // Output to console
+    public static void consoleAdd(String text) {
+
+        EditorMain.consoleAdd(text);
+    }
 
     // Get set camera
     public static GameObject getCamera() {

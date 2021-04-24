@@ -1,6 +1,6 @@
 package gameCore;
 
-import Game.MoveTest;
+import Game.*;
 import com.google.gson.Gson;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
@@ -49,7 +49,7 @@ public class GameMain implements Runnable {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main() {
 
         // Start the game
         Start();
