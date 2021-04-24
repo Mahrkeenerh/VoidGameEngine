@@ -27,6 +27,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class EditorMain extends Application implements Runnable {
 
@@ -685,6 +687,9 @@ public class EditorMain extends Application implements Runnable {
         try {
             new Thread(new GameThread()).start();
         } catch (Exception e) {
+            Logger logger = Logger.getLogger("Logger");
+            logger.log(Level.SEVERE, e.toString());
+
             consoleArea.setText(consoleArea.getText() + "\n" + e.toString());
         }
     }
